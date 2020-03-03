@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="unidades">
+        <item>Longitud</item>
+        <item>Temperatura</item>
+        <item>Masa</item>
+    </string-array>
+
+    <string-array name="unidadesLongitud">
+        <item>Centrimetro</item>
+        <item>Metro</item>
+        <item>Kilometros</item>
+        <item>Pulgadas</item>
+        <item>Pies</item>
+        <item>Millas</item>
+    </string-array>
+
+    <string-array name="unidadesMasa">
+        <item>Kilogramo</item>
+        <item>Gramo</item>
+        <item>Libra</item>
+        <item>Onza</item>
+    </string-array>
+
+    <string-array name="unidadesTemperatura">
+        <item>Celsius</item>
+        <item>Kelvin</item>
+        <item>Fahrenheit</item>
+    </string-array>
+</resources>
