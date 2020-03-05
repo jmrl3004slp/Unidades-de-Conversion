@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
         etCambio = (EditText)findViewById(R.id.editText1);
         etConversion = (EditText)findViewById(R.id.editText2);
-        spinner=(Spinner)findViewById(R.id.spinnerUnidades);
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, R.layout.spinner_layout, R.id.text, unidades);
+        spinner = (Spinner)findViewById(R.id.spinnerUnidades);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, R.id.text, unidades);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             String unidadOcupada;
@@ -87,19 +87,87 @@ public class MainActivity extends AppCompatActivity {
                     ArrayAdapter<String> adapter1;
                     adapter1 = new ArrayAdapter<String>(MainActivity.this, R.layout.spinner_layout, R.id.text, unidadesLongitud);
                     spinner1.setAdapter(adapter1);
+                    spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            unidadOcupada = unidadesLongitud[i];
+                            final ArrayList<String> array = new ArrayList<>();
 
-                    Spinner spinner2 = (Spinner)findViewById(R.id.spinner2);
-                    ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.spinner_layout, R.id.text, unidadesLongitud);
-                    spinner2.setAdapter(adapter2);
+                            for(int j = 0; j < unidadesLongitud.length; j ++) {
+                                try {
+                                    if (unidadOcupada.equals(unidadesLongitud[j])){
+                                    } else {
+                                        array.add(unidadesLongitud[j]);
+                                    }
+                                } catch (Exception ex) {
+                                    Log.d("Error", ex.getMessage());
+                                }
+                            }
+
+                            Spinner spinner2 = (Spinner)findViewById(R.id.spinner2);
+                            ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.spinner_layout, R.id.text, array);
+                            spinner2.setAdapter(adapter2);
+                            spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                    Calculo(unidadOcupada, array.get(i));
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
                 } else {
                     Spinner spinner1 = (Spinner)findViewById(R.id.spinner1);
                     ArrayAdapter<String> adapter1;
                     adapter1 = new ArrayAdapter<String>(MainActivity.this, R.layout.spinner_layout, R.id.text, unidadesMasa);
                     spinner1.setAdapter(adapter1);
+                    spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                            unidadOcupada = unidadesMasa[i];
+                            final ArrayList<String> array = new ArrayList<>();
 
-                    Spinner spinner2 = (Spinner)findViewById(R.id.spinner2);
-                    ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.spinner_layout, R.id.text, unidadesMasa);
-                    spinner2.setAdapter(adapter2);
+                            for(int j = 0; j < unidadesMasa.length; j ++) {
+                                try {
+                                    if (unidadOcupada.equals(unidadesMasa[j])){
+                                    } else {
+                                        array.add(unidadesMasa[j]);
+                                    }
+                                } catch (Exception ex) {
+                                    Log.d("Error", ex.getMessage());
+                                }
+                            }
+
+                            Spinner spinner2 = (Spinner)findViewById(R.id.spinner2);
+                            ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(MainActivity.this, R.layout.spinner_layout, R.id.text, array);
+                            spinner2.setAdapter(adapter2);
+                            spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                    Calculo(unidadOcupada, array.get(i));
+                                }
+
+                                @Override
+                                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                        }
+                    });
                 }
             }
 
@@ -115,12 +183,33 @@ public class MainActivity extends AppCompatActivity {
         float valor = Float.parseFloat(this.etCambio.getText().toString());
         float result = 0;
 
+        /**TEMPERATURA**/
         if(conversion.equals("Celsius")) {
             if(unidad.equals("Fahrenheit")) {
                 result = (valor * (9/5)) + 32;
                 this.etConversion.setText(("" + result));
             } else {
                result = (float) (valor + 273.15);
+                this.etConversion.setText(("" + result));
+            }
+        }
+
+        if(conversion.equals("Fahrenheit")) {
+            if(unidad.equals("Celsius")) {
+                result = (valor - 32) * (5/9);
+                this.etConversion.setText(("" + result));
+            } else {
+                result = (float) ((valor - 32) * (5/9) + 273.15);
+                this.etConversion.setText(("" + result));
+            }
+        }
+
+        if(conversion.equals("Kelvin")) {
+            if(unidad.equals("Celsius")) {
+                result = (float) (valor - 273.15);
+                this.etConversion.setText(("" + result));
+            } else {
+                result = (float) ((valor - 273.15) * (9/5) + 32);
                 this.etConversion.setText(("" + result));
             }
         }
